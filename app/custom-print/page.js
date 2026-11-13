@@ -9,12 +9,13 @@ import { buildSrc } from '@imagekit/next';
 const urlEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT || 'https://ik.imagekit.io/bm2sipware';
 
 const PRODUCTS = [
-  { id: 'custom-ceramic-white', name: 'White Ceramic Coffee Mug', basePrice: 499, image: 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=600' },
-  { id: 'custom-ceramic-black', name: 'Black Ceramic Coffee Mug', basePrice: 520, image: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=600' },
-  { id: 'custom-enamel', name: 'White Enamel Mug', basePrice: 499, image: 'https://images.unsplash.com/photo-1577803645773-f96470509666?w=600' },
-  { id: 'custom-magic', name: 'Magic Ceramic Coffee Mug', basePrice: 549, image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600' },
-  { id: 'custom-sipper', name: 'Aluminium Sipper Bottle', basePrice: 549, image: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=600' },
-  { id: 'custom-steel', name: 'Stainless Steel Water Bottle', basePrice: 599, image: 'https://images.unsplash.com/photo-1589365278144-c9e705f843ba?w=600' }
+  { id: 'custom-ceramic-white', name: 'White Ceramic Coffee Mug', basePrice: 499, image: '/products/White Ceramic Coffee Mug.png' },
+  { id: 'custom-ceramic-black', name: 'Black Ceramic Coffee Mug', basePrice: 520, image: '/products/Black Ceramic Coffee Mug.png' },
+  { id: 'custom-enamel', name: 'White Enamel Mug', basePrice: 499, image: '/products/White Enamel Mug.png' },
+  { id: 'custom-magic', name: 'Magic Ceramic Coffee Mug', basePrice: 549, image: '/products/Magic Ceramic Coffee Mug.png' },
+  { id: 'custom-colour', name: 'Colour Ceramic Coffee Mug', basePrice: 520, image: '/products/Colour Ceramic Coffee Mug.png' },
+  { id: 'custom-sipper', name: 'Aluminium Sipper Bottle', basePrice: 549, image: '/products/Aluminium Sipper Bottle.png' },
+  { id: 'custom-steel', name: 'Stainless Steel Water Bottle', basePrice: 599, image: '/products/Stainless Steel Water Bottle.png' }
 ];
 
 const CUSTOM_DESIGN_FEE = 50;

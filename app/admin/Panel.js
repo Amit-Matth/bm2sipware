@@ -48,6 +48,7 @@ export default function Panel() {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
   const [orderFilter, setOrderFilter] = useState('all'); // 'all' | 'cod' | 'online' | 'success' | 'failed'
+  const [previewImg, setPreviewImg] = useState(null);
 
   const load = async () => {
     setLoading(true);
@@ -68,6 +69,17 @@ export default function Panel() {
   useEffect(() => {
     load();
   }, []);
+
+  useEffect(() => {
+    if (previewImg) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [previewImg]);
 
   const paid = orders.filter(
     o => o.payment_status === 'paid' || (o.payment_mode === 'cod' && o.status === 'delivered')
@@ -162,6 +174,12 @@ export default function Panel() {
           <T id="coupons">Coupons</T>
         </div>
       </div>
+
+      {loading && tab === 'products' && (
+        <div style={{height: 3, width: '100%', background: 'rgba(36,60,143,0.1)', borderRadius: 99, overflow: 'hidden', marginBottom: 20}}>
+          <div style={{height: '100%', width: '40%', background: 'var(--blue)', borderRadius: 99, animation: 'loadingBar 1.2s infinite ease-in-out'}} />
+        </div>
+      )}
 
       {tab === 'overview' && (
         <div className="grid" style={{gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 16}}>
@@ -424,7 +442,11 @@ export default function Panel() {
                       <img
                         src={p.images?.[0] || 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=100'}
                         alt={p.name}
-                        style={{width: 42, height: 42, objectFit: 'cover', borderRadius: 8, background: '#eee'}}
+                        onClick={() => setPreviewImg(p.images?.[0])}
+                        title="Click to view full image preview"
+                        style={{width: 42, height: 42, objectFit: 'cover', borderRadius: 8, background: '#eee', cursor: 'pointer', transition: 'transform 0.2s'}}
+                        onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.15)'}
+                        onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
                       />
                     </td>
                     <td><b>{p.name}</b></td>
@@ -505,6 +527,88 @@ export default function Panel() {
           </div>
         </>
       )}
+
+      {/* Full Image Preview Lightbox Modal */}
+      {previewImg && (
+        <div
+          onClick={() => setPreviewImg(null)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0,0,0,0.8)',
+            backdropFilter: 'blur(8px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 99999,
+            padding: 16
+          }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              position: 'relative',
+              background: '#fff',
+              padding: 20,
+              borderRadius: 20,
+              maxWidth: 520,
+              width: '100%',
+              maxHeight: '90vh',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              border: '1px solid var(--line)',
+              boxShadow: '0 25px 60px rgba(0,0,0,0.4)',
+              boxSizing: 'border-box'
+            }}
+          >
+            <button
+              onClick={() => setPreviewImg(null)}
+              style={{
+                position: 'absolute',
+                top: 12,
+                right: 12,
+                width: 36,
+                height: 36,
+                borderRadius: '50%',
+                background: 'var(--bg)',
+                border: '1px solid var(--line)',
+                fontSize: '1.2rem',
+                cursor: 'pointer',
+                display: 'grid',
+                placeItems: 'center',
+                fontWeight: 700,
+                color: 'var(--ink)',
+                zIndex: 10
+              }}
+            >
+              &times;
+            </button>
+            <img
+              src={previewImg}
+              alt="Full Product Preview"
+              style={{
+                width: '100%',
+                maxHeight: '65vh',
+                objectFit: 'contain',
+                borderRadius: 12,
+                background: '#fff',
+                marginBottom: 12
+              }}
+            />
+            <div style={{fontSize: '0.88rem', fontWeight: 600, color: 'var(--ink)'}}>
+              Product Image Preview
+            </div>
+          </div>
+        </div>
+      )}
+
+      <style jsx global>{`
+        @keyframes loadingBar {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(250%); }
+        }
+      `}</style>
     </div>
   );
 }
