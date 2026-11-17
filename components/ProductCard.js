@@ -44,7 +44,19 @@ function IconSparkles({size=16, color="var(--blue)"}) {
   );
 }
 
-export const Img=({src,alt,...p})=>src?<img src={src} alt={alt} loading="lazy" {...p}/>:<div className="ph" role="img" aria-label={alt}>☕</div>;
+export const Img = ({src, alt, ...p}) => {
+  if (!src) return <div className="ph" role="img" aria-label={alt}>☕</div>;
+  let finalSrc = src;
+  const urlEndpoint = 'https://ik.imagekit.io/bm2sipware';
+  if (src.includes('ik.imagekit.io')) {
+    finalSrc = src;
+  } else if (src.startsWith('/')) {
+    finalSrc = `${urlEndpoint}${src}`;
+  } else if (!src.startsWith('http')) {
+    finalSrc = `${urlEndpoint}/${src}`;
+  }
+  return <img src={finalSrc} alt={alt} loading="lazy" {...p} />;
+};
 
 export default function ProductCard({p}){
   if(!p)return null;
@@ -70,23 +82,144 @@ export default function ProductCard({p}){
   const title = p.name || p.title || 'Mug';
   const price = p.price || 0;
   const compare = p.compare_at_price || p.compare_price || 0;
-  const category = p.category || p.niche || 'Original Sipware';
+  const niche = p.niche || 'Roots';
 
   return (
     <>
-      <article className="card">
-        <Link href={`/product/${p.slug||'#'}`} className="cimg">
-          <Img src={p.images?.[0]} alt={title}/>
-          {p.images?.[1] && <Img src={p.images[1]} alt="" className="alt"/>}
-        </Link>
-        <div className="cinfo">
-          <div>
-            <Link href={`/product/${p.slug||'#'}`}>{title}</Link>
-            <small>{category}</small>
+      <article
+        className="card"
+        style={{
+          background: '#fff',
+          borderRadius: 20,
+          border: '1px solid var(--line)',
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column',
+          justify: 'space-between',
+          transition: 'all 0.35s ease',
+          boxShadow: '0 4px 16px rgba(0,0,0,0.03)'
+        }}
+      >
+        <div>
+          {/* Edge-to-edge Top Image */}
+          <div style={{position: 'relative', width: '100%', aspectRatio: '1', background: '#d3d8db', overflow: 'hidden'}}>
+            <Link href={`/product/${p.slug||'#'}`} style={{display: 'block', width: '100%', height: '100%'}}>
+              <Img
+                src={p.images?.[0]}
+                alt={title}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'contain',
+                  transition: 'transform 0.4s ease'
+                }}
+              />
+              {p.images?.[1] && (
+                <Img
+                  src={p.images[1]}
+                  alt=""
+                  className="alt"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                    opacity: 0,
+                    transition: 'opacity 0.4s ease'
+                  }}
+                />
+              )}
+            </Link>
+
+            {p.niche && (
+              <span
+                style={{
+                  position: 'absolute',
+                  top: 12,
+                  left: 12,
+                  fontSize: '0.72rem',
+                  fontWeight: 700,
+                  color: 'var(--blue)',
+                  background: 'rgba(255,255,255,0.92)',
+                  backdropFilter: 'blur(8px)',
+                  padding: '4px 12px',
+                  borderRadius: 99,
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                  letterSpacing: '.03em',
+                  pointerEvents: 'none'
+                }}
+              >
+                {p.niche}
+              </span>
+            )}
           </div>
-          <span>{inr(price)}{compare > price && <s>{inr(compare)}</s>}</span>
+
+          {/* Card Info Section with Padding */}
+          <div style={{padding: '16px 16px 0 16px'}}>
+            <Link
+              href={`/product/${p.slug||'#'}`}
+              style={{
+                fontWeight: 700,
+                fontSize: '1rem',
+                color: 'var(--ink)',
+                lineHeight: 1.3,
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden',
+                marginBottom: 8
+              }}
+            >
+              {title}
+            </Link>
+
+            <div style={{display: 'flex', alignItems: 'baseline', gap: 8}}>
+              <span style={{fontSize: '1.2rem', fontWeight: 800, color: 'var(--blue)'}}>
+                {inr(price)}
+              </span>
+              {compare > price && (
+                <s style={{color: 'var(--mute)', fontSize: '0.88rem'}}>{inr(compare)}</s>
+              )}
+            </div>
+          </div>
         </div>
-        <button className="link" onClick={() => setQ(true)}>Quick view</button>
+
+        {/* Card Action Button with Padding */}
+        <div style={{padding: '14px 16px 16px 16px'}}>
+          <button
+            type="button"
+            onClick={() => setQ(true)}
+            style={{
+              width: '100%',
+              padding: '10px 14px',
+              borderRadius: 12,
+              border: '1px solid var(--line)',
+              background: 'var(--bg)',
+              color: 'var(--ink)',
+              fontSize: '0.88rem',
+              fontWeight: 700,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 6,
+              transition: 'all 0.2s ease'
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.background = 'var(--blue)';
+              e.currentTarget.style.color = '#fff';
+              e.currentTarget.style.borderColor = 'var(--blue)';
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background = 'var(--bg)';
+              e.currentTarget.style.color = 'var(--ink)';
+              e.currentTarget.style.borderColor = 'var(--line)';
+            }}
+          >
+            <IconShoppingBag size={15} color="currentColor" /> Quick View
+          </button>
+        </div>
       </article>
 
       {/* Render Quick View Modal into body portal to bypass card stacking context */}
@@ -139,9 +272,11 @@ export default function ProductCard({p}){
             {/* Right Column: Details & Actions */}
             <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
               <div>
-                <span style={{fontSize: '0.78rem', fontWeight: 700, color: 'var(--blue)', background: 'rgba(36, 60, 143, 0.08)', padding: '3px 10px', borderRadius: 99, letterSpacing: '.04em', textTransform: 'uppercase', display: 'inline-block', marginBottom: 8}}>
-                  {category}
-                </span>
+                {niche && (
+                  <span style={{fontSize: '0.78rem', fontWeight: 700, color: 'var(--blue)', background: 'rgba(36, 60, 143, 0.08)', padding: '3px 10px', borderRadius: 99, letterSpacing: '.04em', textTransform: 'uppercase', display: 'inline-block', marginBottom: 8}}>
+                    {niche}
+                  </span>
+                )}
                 <h3 style={{fontSize: 'clamp(1.2rem, 4vw, 1.5rem)', fontWeight: 800, color: 'var(--ink)', marginBottom: 6, lineHeight: 1.2}}>
                   {title}
                 </h3>

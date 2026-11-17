@@ -26,27 +26,32 @@ export default function Contact(){
         <p style={{color: 'var(--mute)', fontSize: '0.98rem', maxWidth: 540, margin: '0 auto', lineHeight: 1.5}}>Have questions about our mugs, shipping, or custom orders? We&apos;re always here to help you out.</p>
       </div>
 
-      <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 24, marginBottom: 48}}>
-        <div style={{background: '#fff', padding: 24, borderRadius: '20px', border: '1px solid var(--line)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
+      <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24, marginBottom: 48}}>
+        {/* Left Support Card */}
+        <div style={{background: '#fff', padding: 24, borderRadius: '20px', border: '1px solid var(--line)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 20}}>
           <div>
-            <h3 style={{fontSize: '1.2rem', marginBottom: 12}}>Direct Support</h3>
-            <p style={{color: 'var(--mute)', marginBottom: 16, fontSize: '0.9rem', lineHeight: 1.5}}>Reach out to our support team directly via email or phone during working hours.</p>
-            <div style={{display: 'grid', gap: 10, marginBottom: 20, fontSize: '0.9rem'}}>
-              <div><small style={{color: 'var(--mute)', display: 'block'}}>Email us</small><b>amitmatth121@gmail.com</b></div>
-              <div><small style={{color: 'var(--mute)', display: 'block'}}>Call / WhatsApp</small><b>+91 98136 62025</b></div>
-              <div><small style={{color: 'var(--mute)', display: 'block'}}>Working Hours</small><b>Mon – Sat: 10:00 AM – 6:00 PM IST</b></div>
+            <h3 style={{fontSize: '1.2rem', marginBottom: 12}}>Support, Bugs &amp; Feedback</h3>
+            <p style={{color: 'var(--mute)', marginBottom: 16, fontSize: '0.9rem', lineHeight: 1.5}}>
+              Reach out to us directly via email for any order inquiries, support, reporting website bugs, or sharing feedback.
+            </p>
+            <div style={{display: 'grid', gap: 12, marginBottom: 10, fontSize: '0.9rem'}}>
+              <div><small style={{color: 'var(--mute)', display: 'block'}}>Email us directly</small><b>support@bm2group.in</b></div>
             </div>
           </div>
-          <div style={{background: 'var(--bg)', padding: 14, borderRadius: 12, fontSize: '0.82rem', color: 'var(--mute)'}}>
-            💡 Tip: Include your order ID in messages for faster assistance.
+
+          <div style={{display: 'grid', gap: 10}}>
+            <div style={{fontSize: '0.82rem', color: 'var(--mute)', lineHeight: 1.4, background: 'rgba(36, 60, 143, 0.04)', padding: 12, borderRadius: 12, borderLeft: '3px solid var(--blue)'}}>
+              <b>Filing a damage claim?</b> Email your unboxing video &amp; Order ID directly to <a href="mailto:support@bm2group.in" style={{color: 'var(--blue)', fontWeight: 600}}>support@bm2group.in</a>.
+            </div>
+            <div style={{background: 'var(--bg)', padding: 12, borderRadius: 12, fontSize: '0.82rem', color: 'var(--mute)'}}>
+              💡 Tip: Include your order ID or bug screenshots in your email for faster assistance.
+            </div>
           </div>
         </div>
 
+        {/* Right Send Message Card */}
         <div style={{background: '#fff', padding: 24, borderRadius: '20px', border: '1px solid var(--line)'}}>
-          <h3 style={{fontSize: '1.2rem', marginBottom: 10}}>Send a Message</h3>
-          <p style={{fontSize: '0.82rem', color: 'var(--mute)', lineHeight: 1.4, marginBottom: 14, background: 'rgba(36, 60, 143, 0.04)', padding: 10, borderRadius: 8, borderLeft: '3px solid var(--blue)'}}>
-            <b>Filing a damage claim?</b> Please email your unboxing video and Order ID directly to <a href="mailto:amitmatth121@gmail.com" style={{color: 'var(--blue)', fontWeight: 600}}>amitmatth121@gmail.com</a>.
-          </p>
+          <h3 style={{fontSize: '1.2rem', marginBottom: 14}}>Send a Message</h3>
           {sent ? (
             <div style={{padding: 24, textAlign: 'center', background: 'var(--bg)', borderRadius: 12}}>
               <h4 style={{color: 'var(--blue)', marginBottom: 6}}>Message Sent Successfully!</h4>

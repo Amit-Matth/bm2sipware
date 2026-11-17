@@ -4,6 +4,7 @@ import {useState, useEffect} from 'react';
 import {useRouter} from 'next/navigation';
 import Script from 'next/script';
 import {useCart} from '@/components/CartProvider';
+import {Img} from '@/components/ProductCard';
 import {
   inr,
   calcDeliveryFee,
@@ -77,6 +78,16 @@ function IconShieldCheck({size = 18, color = 'var(--blue)'}) {
   );
 }
 
+function IconAlert({size = 18, color = 'currentColor'}) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{display: 'inline-block', verticalAlign: 'middle', marginRight: 6}}>
+      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+      <line x1="12" y1="9" x2="12" y2="13"></line>
+      <line x1="12" y1="17" x2="12.01" y2="17"></line>
+    </svg>
+  );
+}
+
 function IconTag({size = 18, color = 'var(--mute)'}) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -92,11 +103,9 @@ export default function Checkout() {
   const [f, setF] = useState({name: '', email: '', phone: '', line1: '', line2: '', city: '', state: '', pincode: ''});
   const [mode, setMode] = useState('online'); // 'online' | 'cod'
   const [giftPackaging, setGiftPackaging] = useState(false);
-  const [code, setCode] = useState('');
-  const [disc, setDisc] = useState(0);
-  const [msg, setMsg] = useState('');
   const [busy, setBusy] = useState(false);
   const [redirecting, setRedirecting] = useState(false);
+  const [msg, setMsg] = useState('');
 
   useEffect(() => {
     try {
@@ -117,19 +126,7 @@ export default function Checkout() {
   const deliveryFee = calcDeliveryFee(count);
   const handlingFee = calcHandlingFee(count, mode);
   const giftFee = calcGiftFee(count, giftPackaging);
-  const total = Math.max(0, subtotal - disc + deliveryFee + handlingFee + giftFee);
-
-  async function apply() {
-    if (!code.trim()) return;
-    try {
-      const res = await fetch('/api/coupons', {method: 'POST', body: JSON.stringify({code, subtotal})});
-      const j = await res.json();
-      setDisc(j.discount || 0);
-      setMsg(j.error || `Coupon applied: ${inr(j.discount)} off`);
-    } catch {
-      setMsg('Could not apply coupon');
-    }
-  }
+  const total = Math.max(0, subtotal + deliveryFee + handlingFee + giftFee);
 
   async function place(e) {
     e.preventDefault();
@@ -145,7 +142,6 @@ export default function Checkout() {
           customer: {name: f.name, email: f.email, phone: formattedPhone},
           address: {line1: f.line1, line2: f.line2, city: f.city, state: f.state, pincode: f.pincode},
           items: items.map(i => ({id: i.id, qty: i.qty})),
-          coupon: disc ? code : '',
           mode,
           giftPackaging
         })
@@ -364,7 +360,7 @@ export default function Checkout() {
                       Pay Online (Prepaid)
                     </div>
                     <div style={{fontSize: '0.8rem', color: 'var(--mute)', lineHeight: 1.3, marginTop: 2}}>
-                      UPI, Cards, Netbanking &mdash; <b style={{color: 'var(--blue)'}}>FREE (₹0) Handling</b>
+                      UPI, Cards, Netbanking
                     </div>
                   </div>
                 </label>
@@ -398,12 +394,19 @@ export default function Checkout() {
                       Cash on Delivery (COD)
                     </div>
                     <div style={{fontSize: '0.8rem', color: 'var(--mute)', lineHeight: 1.3, marginTop: 2}}>
-                      Handling Charge: <b>{inr(calcHandlingFee(count, 'cod'))}</b> ({inr(HANDLING_FEE_PER_UNIT)} / prod)
+                      Pay cash upon delivery
                     </div>
                   </div>
                 </label>
 
               </div>
+
+              {/* COD Item Count Limit Warning */}
+              {mode === 'cod' && count > 2 && (
+                <div style={{marginTop: 14, padding: '12px 14px', background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: 12, color: '#DC2626', fontSize: '0.85rem', fontWeight: 600, lineHeight: 1.5}}>
+                  <IconAlert size={18} color="#DC2626" /> Cash on Delivery (COD) is available for up to 2 items only. Please select Online (Prepaid) for orders with 3 or more items.
+                </div>
+              )}
             </div>
 
           </div>
@@ -480,7 +483,7 @@ export default function Checkout() {
                     >
                       <div style={{display: 'flex', alignItems: 'center', gap: 10, minWidth: 0, flex: 1}}>
                         {i.image && (
-                          <img
+                          <Img
                             src={i.image}
                             alt={i.name}
                             style={{width: 40, height: 40, objectFit: 'cover', borderRadius: 8, flexShrink: 0}}
@@ -512,63 +515,30 @@ export default function Checkout() {
                   ))}
                 </div>
 
-                {/* Coupon Code Input */}
-                <div style={{display: 'flex', gap: 8, marginBottom: 16, width: '100%', minWidth: 0}}>
-                  <div style={{position: 'relative', flex: 1, minWidth: 0}}>
-                    <input
-                      placeholder="Coupon code (optional)"
-                      value={code}
-                      onChange={e => setCode(e.target.value.toUpperCase())}
-                      style={{paddingLeft: 34, minWidth: 0, width: '100%', fontSize: '0.85rem'}}
-                    />
-                    <div style={{position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', display: 'flex', alignItems: 'center', pointerEvents: 'none'}}>
-                      <IconTag size={16} color="var(--mute)" />
-                    </div>
-                  </div>
-                  <button type="button" className="btn ghost" onClick={apply} style={{padding: '0 16px', borderRadius: 12, fontWeight: 700, fontSize: '0.85rem', flexShrink: 0}}>
-                    Apply
-                  </button>
-                </div>
-
-                {msg && (
-                  <div
-                    style={{
-                      padding: '10px 14px',
-                      borderRadius: 10,
-                      fontSize: '0.85rem',
-                      fontWeight: 600,
-                      marginBottom: 14,
-                      background: disc ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.1)',
-                      color: disc ? '#059669' : '#DC2626',
-                      border: disc ? '1px solid rgba(16,185,129,0.2)' : '1px solid rgba(239,68,68,0.2)'
-                    }}
-                  >
-                    {msg}
-                  </div>
-                )}
-
                 {/* Price Breakdown */}
                 <div style={{display: 'grid', gap: 8, fontSize: '0.88rem', color: 'var(--ink)', borderTop: '1px solid var(--line)', paddingTop: 14}}>
                   <div className="line">
-                    <span style={{color: 'var(--mute)'}}>Subtotal ({count} items)</span>
+                    <span style={{color: 'var(--mute)'}}>Item Total</span>
                     <span style={{fontWeight: 600}}>{inr(subtotal)}</span>
                   </div>
 
-                  {disc > 0 && (
-                    <div className="line">
-                      <span style={{color: 'var(--blue)', fontWeight: 600}}>Coupon Discount</span>
-                      <span style={{color: 'var(--blue)', fontWeight: 700}}>−{inr(disc)}</span>
-                    </div>
-                  )}
-
                   <div className="line">
-                    <span style={{color: 'var(--mute)'}}>Delivery Fee (₹30 / prod)</span>
+                    <span style={{color: 'var(--mute)'}}>Delivery Fee</span>
                     <span style={{fontWeight: 600}}>{inr(deliveryFee)}</span>
                   </div>
 
                   <div className="line">
                     <span style={{color: 'var(--mute)'}}>Handling Charge</span>
-                    <span style={{fontWeight: 600}}>{mode === 'cod' ? inr(handlingFee) : 'FREE (₹0)'}</span>
+                    <span style={{fontWeight: 600}}>
+                      {mode === 'cod' ? (
+                        <span>{inr(handlingFee)}</span>
+                      ) : (
+                        <>
+                          <s style={{color: 'var(--mute)', marginRight: 6}}>{inr((count || 1) * HANDLING_FEE_PER_UNIT)}</s>
+                          <span style={{color: '#059669', fontWeight: 700}}>FREE</span>
+                        </>
+                      )}
+                    </span>
                   </div>
 
                   {giftPackaging && (
@@ -601,14 +571,16 @@ export default function Checkout() {
                 <button
                   type="submit"
                   className="btn"
-                  disabled={busy}
+                  disabled={busy || (mode === 'cod' && count > 2)}
                   style={{
                     width: '100%',
                     padding: '16px',
                     fontSize: '1.05rem',
                     fontWeight: 800,
                     borderRadius: 14,
-                    boxShadow: '0 6px 20px rgba(36,60,143,0.3)'
+                    boxShadow: '0 6px 20px rgba(36,60,143,0.3)',
+                    opacity: (mode === 'cod' && count > 2) ? 0.6 : 1,
+                    cursor: (mode === 'cod' && count > 2) ? 'not-allowed' : 'pointer'
                   }}
                 >
                   {busy

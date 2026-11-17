@@ -189,7 +189,7 @@ export default function Account(){
           </div>
           <div>
             <h3 style={{fontSize: '1.05rem', fontWeight: 700, margin: 0}}>Need Help Finding Your Order?</h3>
-            <p style={{fontSize: '0.85rem', color: 'var(--mute)', margin: '2px 0 0'}}>Email support at <b>amitmatth121@gmail.com</b></p>
+            <p style={{fontSize: '0.85rem', color: 'var(--mute)', margin: '2px 0 0'}}>Email support at <b>support@bm2group.in</b></p>
           </div>
         </div>
         <a href="/contact" style={{background: 'var(--blue)', color: '#fff', padding: '10px 20px', borderRadius: 10, fontSize: '0.85rem', fontWeight: 700, textDecoration: 'none'}}>

@@ -17,16 +17,23 @@ export const useCart = () => useContext(C);
 
 export default function CartProvider({children}) {
   const [items, set] = useState([]);
+  const [mounted, setMounted] = useState(false);
   const [toast, setToast] = useState(null);
   const [cartBump, setCartBump] = useState(false);
 
   useEffect(() => {
-    try { set(JSON.parse(localStorage.getItem('cart') || '[]')); } catch {}
+    setMounted(true);
+    try {
+      const saved = localStorage.getItem('cart');
+      if (saved) set(JSON.parse(saved));
+    } catch {}
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(items));
-  }, [items]);
+    if (mounted) {
+      localStorage.setItem('cart', JSON.stringify(items));
+    }
+  }, [items, mounted]);
 
   const add = (p, qty = 1) => {
     const cartKey = p.name;
@@ -71,8 +78,8 @@ export default function CartProvider({children}) {
 
   const setQty = (cartKey, q) => set(s => q < 1 ? s.filter(i => i.cartKey !== cartKey && i.id !== cartKey) : s.map(i => (i.cartKey === cartKey || i.id === cartKey) ? {...i, qty: q} : i));
   const clear = () => set([]);
-  const count = items.reduce((a, i) => a + i.qty, 0);
-  const subtotal = items.reduce((a, i) => a + i.qty * i.price, 0);
+  const count = mounted ? items.reduce((a, i) => a + i.qty, 0) : 0;
+  const subtotal = mounted ? items.reduce((a, i) => a + i.qty * i.price, 0) : 0;
 
   return (
     <C.Provider value={{items, add, buyNow, setQty, clear, count, subtotal, cartBump}}>

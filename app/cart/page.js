@@ -176,11 +176,11 @@ export default function Cart() {
           </span>
 
           <h1 style={{fontSize: 'clamp(1.8rem, 5vw, 2.5rem)', fontWeight: 800, marginBottom: 12, lineHeight: 1.2}}>
-            Ready to find your favorite mug?
+            Ready to find your favorite mug or bottle?
           </h1>
 
           <p style={{color: 'var(--mute)', fontSize: '0.98rem', maxWidth: 520, margin: '0 auto 28px', lineHeight: 1.6}}>
-            Explore our handcrafted original art mugs, temperature-retaining thermos flasks, and custom photo print drinkware.
+            Explore our handcrafted original art mugs, insulated bottles, and custom printed drinkware.
           </p>
 
           <div style={{display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 36}}>
@@ -210,50 +210,6 @@ export default function Cart() {
             >
               ✨ Order Custom Print
             </Link>
-          </div>
-
-          {/* Quick Feature Badges Row */}
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-              gap: 14,
-              maxWidth: 780,
-              margin: '0 auto',
-              borderTop: '1px solid var(--line)',
-              paddingTop: 28,
-              textAlign: 'left'
-            }}
-          >
-            <div style={{display: 'flex', alignItems: 'center', gap: 12, background: '#fff', padding: 14, borderRadius: 16, border: '1px solid var(--line)'}}>
-              <div style={{width: 38, height: 38, borderRadius: 10, background: 'rgba(36,60,143,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0}}>
-                <IconSparkles size={18} color="var(--blue)" />
-              </div>
-              <div>
-                <div style={{fontWeight: 700, fontSize: '0.88rem'}}>HD Sublimation Artwork</div>
-                <div style={{fontSize: '0.78rem', color: 'var(--mute)'}}>Zero-fade vibrant prints</div>
-              </div>
-            </div>
-
-            <div style={{display: 'flex', alignItems: 'center', gap: 12, background: '#fff', padding: 14, borderRadius: 16, border: '1px solid var(--line)'}}>
-              <div style={{width: 38, height: 38, borderRadius: 10, background: 'rgba(36,60,143,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0}}>
-                <IconShieldCheck size={18} color="var(--blue)" />
-              </div>
-              <div>
-                <div style={{fontWeight: 700, fontSize: '0.88rem'}}>Microwave &amp; Dishwasher Safe</div>
-                <div style={{fontSize: '0.78rem', color: 'var(--mute)'}}>100% Premium Ceramic</div>
-              </div>
-            </div>
-
-            <div style={{display: 'flex', alignItems: 'center', gap: 12, background: '#fff', padding: 14, borderRadius: 16, border: '1px solid var(--line)'}}>
-              <div style={{width: 38, height: 38, borderRadius: 10, background: 'rgba(36,60,143,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0}}>
-                <IconTruck size={18} color="var(--blue)" />
-              </div>
-              <div>
-                <div style={{fontWeight: 700, fontSize: '0.88rem'}}>All-India Express Delivery</div>
-                <div style={{fontSize: '0.78rem', color: 'var(--mute)'}}>Dispatched in 2-3 business days</div>
-              </div>
-            </div>
           </div>
 
         </div>
@@ -313,7 +269,7 @@ export default function Cart() {
                     {i.name}
                   </Link>
                   <div style={{fontWeight: 800, color: 'var(--blue)', fontSize: '1rem', marginBottom: 8}}>
-                    {inr(i.price)}
+                    {inr(i.price)} &times; {i.qty} <span style={{fontSize: '0.85rem', fontWeight: 600, color: 'var(--mute)'}}>({inr(i.price * i.qty)})</span>
                   </div>
 
                   {/* Quantity Controller */}
@@ -408,12 +364,12 @@ export default function Cart() {
           {/* Price Breakdown */}
           <div style={{display: 'grid', gap: 10, fontSize: '0.9rem', color: 'var(--ink)'}}>
             <div style={{display: 'flex', justifyContent: 'space-between'}}>
-              <span style={{color: 'var(--mute)'}}>Subtotal ({count} {count === 1 ? 'item' : 'items'})</span>
+              <span style={{color: 'var(--mute)'}}>Item Total</span>
               <b>{inr(subtotal)}</b>
             </div>
 
             <div style={{display: 'flex', justifyContent: 'space-between'}}>
-              <span style={{color: 'var(--mute)'}}>Delivery Fee (₹30 / prod)</span>
+              <span style={{color: 'var(--mute)'}}>Delivery Fee</span>
               <b>{inr(deliveryFee)}</b>
             </div>
 

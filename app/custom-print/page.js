@@ -9,13 +9,13 @@ import { buildSrc } from '@imagekit/next';
 const urlEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT || 'https://ik.imagekit.io/bm2sipware';
 
 const PRODUCTS = [
-  { id: 'custom-ceramic-white', name: 'White Ceramic Coffee Mug', basePrice: 499, image: '/products/White Ceramic Coffee Mug.png' },
-  { id: 'custom-ceramic-black', name: 'Black Ceramic Coffee Mug', basePrice: 520, image: '/products/Black Ceramic Coffee Mug.png' },
-  { id: 'custom-enamel', name: 'White Enamel Mug', basePrice: 499, image: '/products/White Enamel Mug.png' },
-  { id: 'custom-magic', name: 'Magic Ceramic Coffee Mug', basePrice: 549, image: '/products/Magic Ceramic Coffee Mug.png' },
-  { id: 'custom-colour', name: 'Colour Ceramic Coffee Mug', basePrice: 520, image: '/products/Colour Ceramic Coffee Mug.png' },
-  { id: 'custom-sipper', name: 'Aluminium Sipper Bottle', basePrice: 549, image: '/products/Aluminium Sipper Bottle.png' },
-  { id: 'custom-steel', name: 'Stainless Steel Water Bottle', basePrice: 599, image: '/products/Stainless Steel Water Bottle.png' }
+  { id: 'custom-ceramic-white', name: 'White Ceramic Coffee Mug', basePrice: 499, image: '/products/White Ceramic Coffee Mug.png', type: 'mug', size: '11 OZ (325 ml)' },
+  { id: 'custom-ceramic-black', name: 'Black Ceramic Coffee Mug', basePrice: 520, image: '/products/Black Ceramic Coffee Mug.png', type: 'mug', size: '11 OZ (325 ml)' },
+  { id: 'custom-enamel', name: 'White Enamel Mug', basePrice: 499, image: '/products/White Enamel Mug.png', type: 'mug', size: '11 OZ (325 ml)' },
+  { id: 'custom-magic', name: 'Magic Ceramic Coffee Mug', basePrice: 549, image: '/products/Magic Ceramic Coffee Mug.png', type: 'mug', size: '11 OZ (325 ml)' },
+  { id: 'custom-colour', name: 'Colour Ceramic Coffee Mug', basePrice: 520, image: '/products/Colour Ceramic Coffee Mug.png', type: 'mug', size: '11 OZ (325 ml)' },
+  { id: 'custom-sipper', name: 'Aluminium Sipper Bottle', basePrice: 549, image: '/products/Aluminium Sipper Bottle.png', type: 'bottle', size: '25 OZ (750 ml)' },
+  { id: 'custom-steel', name: 'Stainless Steel Water Bottle', basePrice: 599, image: '/products/Stainless Steel Water Bottle.png', type: 'bottle', size: '25 OZ (750 ml)' }
 ];
 
 const CUSTOM_DESIGN_FEE = 50;
@@ -25,7 +25,7 @@ export default function CustomPrint() {
   const router = useRouter();
 
   const [selectedProduct, setSelectedProduct] = useState(PRODUCTS[0]);
-  const [size, setSize] = useState('11 OZ (325 ml)');
+  const [size, setSize] = useState(PRODUCTS[0].size);
   const [sizeExtra, setSizeExtra] = useState(0);
 
   // ImageKit states
@@ -43,6 +43,12 @@ export default function CustomPrint() {
   const [customText, setCustomText] = useState('');
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
+
+  const handleProductChange = (p) => {
+    setSelectedProduct(p);
+    setSize(p.size);
+    setSizeExtra(0);
+  };
 
   const handleImageUpload = async (e) => {
     const file = e.target.files?.[0];
@@ -213,7 +219,7 @@ export default function CustomPrint() {
                       type="radio"
                       name="product"
                       checked={selectedProduct.id === p.id}
-                      onChange={() => setSelectedProduct(p)}
+                      onChange={() => handleProductChange(p)}
                       style={{ accentColor: 'var(--blue)', flexShrink: 0 }}
                     />
                     <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.name}</span>
@@ -227,21 +233,21 @@ export default function CustomPrint() {
           {/* 2. Choose Size */}
           <div>
             <label style={{ fontWeight: 700, fontSize: '0.95rem', display: 'block', marginBottom: 10 }}>2. Select Size Capacity</label>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-              <button
-                type="button"
-                onClick={() => { setSize('11 OZ (325 ml)'); setSizeExtra(0); }}
-                style={{ padding: '12px', borderRadius: 12, border: '1px solid var(--line)', background: sizeExtra === 0 ? 'var(--blue)' : '#fff', color: sizeExtra === 0 ? '#fff' : 'var(--ink)', cursor: 'pointer', fontWeight: 600, fontSize: '0.9rem' }}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 10 }}>
+              <div
+                style={{
+                  padding: '12px 16px',
+                  borderRadius: 12,
+                  border: '2px solid var(--blue)',
+                  background: 'rgba(36, 60, 143, 0.06)',
+                  color: 'var(--blue)',
+                  fontWeight: 700,
+                  fontSize: '0.9rem',
+                  textAlign: 'center'
+                }}
               >
-                11 OZ (325 ml)
-              </button>
-              <button
-                type="button"
-                onClick={() => { setSize('25 OZ (750 ml)'); setSizeExtra(400); }}
-                style={{ padding: '12px', borderRadius: 12, border: '1px solid var(--line)', background: sizeExtra === 400 ? 'var(--blue)' : '#fff', color: sizeExtra === 400 ? '#fff' : 'var(--ink)', cursor: 'pointer', fontWeight: 600, fontSize: '0.9rem' }}
-              >
-                25 OZ (+{inr(400)})
-              </button>
+                {selectedProduct.size} — {selectedProduct.type === 'bottle' ? 'Bottle Standard Size' : 'Mug Standard Size'}
+              </div>
             </div>
           </div>
 

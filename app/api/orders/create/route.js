@@ -45,10 +45,11 @@ export async function POST(req) {
     const subtotal = lines.reduce((s, l) => s + l.price * l.qty, 0);
     const totalQty = lines.reduce((s, l) => s + l.qty, 0);
 
-    const cq = await quote(coupon, subtotal);
-    if(cq.error) return bad(cq.error);
+    if (mode === 'cod' && totalQty > 2) {
+      return bad('Cash on Delivery (COD) is available for up to 2 items only. Please select Online (Prepaid) for orders with 3 or more items.');
+    }
 
-    const discount = cq.discount || 0;
+    const discount = 0;
     const deliveryFee = calcDeliveryFee(totalQty);
     const handlingFee = calcHandlingFee(totalQty, mode);
     const giftFee = calcGiftFee(totalQty, giftPackaging);

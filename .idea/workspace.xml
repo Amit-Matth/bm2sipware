@@ -5,17 +5,59 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="07aacf08-e8ec-4d0c-8ab2-1455b5c5e14a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/public/products/Aluminium Sipper Bottle.avif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/products/Black Ceramic Coffee Mug.avif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/products/Colour Ceramic Coffee Mug.avif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/products/Magic Ceramic Coffee Mug.avif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/products/Stainless Steel Water Bottle.avif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/products/White Ceramic Coffee Mug.avif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/products/White Enamel Mug.avif" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/account/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/account/page.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/admin/Panel.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/Panel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/admin/products/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/admin/products/route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/orders/create/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/orders/create/route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cart/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/cart/page.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/checkout/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/checkout/page.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/contact/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/contact/page.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/custom-print/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/custom-print/page.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/order/[id]/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/[id]/page.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/page.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/policy/[slug]/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/policy/[slug]/page.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/product/[slug]/Buy.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/product/[slug]/Buy.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/product/[slug]/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/product/[slug]/page.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/shop/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/shop/page.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/CartProvider.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/CartProvider.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/Footer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ImageKitImage.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/ImageKitImage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ProductCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/ProductCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/coupon.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/coupon.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/db.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/db.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/format.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/format.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/mail.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/mail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/designs/coding_1/coding_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/designs/coding_1/images/1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/designs/coding_1/images/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/designs/coding_1/images/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/designs/coding_1/images/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/designs/coding_1/images/5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/designs/coding_1/images/Black Ceramic Coffee Mug.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/designs/coding_1/images/Gemini123456.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/designs/coding_2_w/coding_2_w.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/designs/coding_2_w/images/1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/designs/coding_2_w/images/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/designs/coding_2_w/images/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/designs/coding_2_w/images/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/designs/coding_2_w/images/Aluminium Sipper Bottle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/products/Aluminium Sipper Bottle.avif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/products/Aluminium Sipper Bottle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/products/Black Ceramic Coffee Mug.avif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/products/Black Ceramic Coffee Mug.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/products/Colour Ceramic Coffee Mug.avif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/products/Colour Ceramic Coffee Mug.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/products/Magic Ceramic Coffee Mug.avif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/products/Magic Ceramic Coffee Mug.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/products/Stainless Steel Water Bottle.avif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/products/Stainless Steel Water Bottle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/products/White Ceramic Coffee Mug.avif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/products/White Ceramic Coffee Mug.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/products/White Enamel Mug.avif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/products/White Enamel Mug.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,22 +80,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "CidrDebugProfileConversion": "true",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Ankit/Desktop/bm2sipware/public/products",
-    "settings.editor.selected.configurable": "templates.modelproviders.configurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;CidrDebugProfileConversion&quot;: &quot;true&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Ankit/Desktop/bm2sipware/public/products&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;templates.modelproviders.configurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Ankit\Desktop\bm2sipware\public\products" />
@@ -75,7 +117,7 @@
       <list>
         <HostState>
           <option name="agentId" value="android-studio-agent-v2" />
-          <option name="conversationId" value="54ecdd89-6601-495b-bb9e-64ecbd1e4521" />
+          <option name="conversationId" value="b053d506-78a2-4ea2-89b6-6e7740ae1dda" />
           <option name="hostId" value="TOOL_WINDOW" />
         </HostState>
       </list>

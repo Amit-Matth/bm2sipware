@@ -378,7 +378,7 @@ export default function Policy({params}){
             </div>
             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--line)', paddingBottom: 8, flexWrap: 'wrap', gap: 8}}>
               <span style={{color: 'var(--mute)'}}>Support Email</span>
-              <a href="mailto:amitmatth121@gmail.com" style={{color: 'var(--blue)', fontWeight: 600, wordBreak: 'break-all'}}>amitmatth121@gmail.com</a>
+              <a href="mailto:support@bm2group.in" style={{color: 'var(--blue)', fontWeight: 600, wordBreak: 'break-all'}}>support@bm2group.in</a>
             </div>
             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8}}>
               <span style={{color: 'var(--mute)'}}>Help Desk</span>
@@ -714,7 +714,7 @@ export default function Policy({params}){
           <div style={{background: 'var(--bg)', padding: 20, borderRadius: 14, border: '1px solid var(--line)', display: 'grid', gap: 10}}>
             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--line)', paddingBottom: 8, flexWrap: 'wrap', gap: 8}}>
               <span style={{color: 'var(--mute)'}}>Support Email</span>
-              <a href="mailto:amitmatth121@gmail.com" style={{color: 'var(--blue)', fontWeight: 600, wordBreak: 'break-all'}}>amitmatth121@gmail.com</a>
+              <a href="mailto:support@bm2group.in" style={{color: 'var(--blue)', fontWeight: 600, wordBreak: 'break-all'}}>support@bm2group.in</a>
             </div>
             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8}}>
               <span style={{color: 'var(--mute)'}}>Help Desk</span>
@@ -871,7 +871,7 @@ export default function Policy({params}){
                 If your order arrives broken, physically damaged during transit, or exhibits a clear manufacturing print defect:
               </p>
               <ol style={{paddingLeft: 20, lineHeight: 1.7, color: 'var(--ink)', fontSize: '0.9rem', margin: 0}}>
-                <li>Contact our support team within <b>7 days of delivery</b> at <a href="mailto:amitmatth121@gmail.com" style={{color: 'var(--blue)', fontWeight: 600}}>amitmatth121@gmail.com</a>.</li>
+                <li>Contact our support team within <b>7 days of delivery</b> at <a href="mailto:support@bm2group.in" style={{color: 'var(--blue)', fontWeight: 600}}>support@bm2group.in</a>.</li>
                 <li>Provide your order number, clear photographs, and an unboxing video showing the shipping label and the damaged/defective item.</li>
                 <li>Upon verification, BM2 Sipware will issue a replacement at no additional charge or process a store credit/refund.</li>
               </ol>

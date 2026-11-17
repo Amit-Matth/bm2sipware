@@ -1,5 +1,6 @@
 import {one, inr} from '@/lib/db';
 import {notFound} from 'next/navigation';
+import {Img} from '@/components/ProductCard';
 
 export const dynamic = 'force-dynamic';
 
@@ -116,7 +117,7 @@ export default async function Order({params}) {
           {(o.items || []).map(i => (
             <div key={i.id || i.slug} style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, paddingBottom: 16, borderBottom: '1px solid var(--line)'}}>
               <div style={{display: 'flex', alignItems: 'center', gap: 14}}>
-                <img
+                <Img
                   src={i.image || 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=120'}
                   alt={i.name}
                   style={{width: 56, height: 56, objectFit: 'cover', borderRadius: 10, background: '#eee'}}

@@ -34,10 +34,23 @@ function IconSparkles({size=16, color="var(--blue)"}) {
   );
 }
 
+const PRODUCT_SPECS_MAP = {
+  'White Ceramic Mug': { 'Capacity': '11 Oz', 'Finish': 'Glossy Finish', 'Print': 'Fade Proof Print', 'Material': 'Ceramic Mug', 'Highlights': 'Full White, OEKO-TEX Certified, Box Packing, No Minimums' },
+  'Black Ceramic Mug': { 'Capacity': '11 Oz', 'Finish': 'Glossy Finish', 'Print': 'Fade Proof Print', 'Material': 'Ceramic Mug', 'Highlights': 'Full Black Color, OEKO-TEX Certified, Box Packing, No Minimums' },
+  'White Enamel Mug': { 'Capacity': '11 Oz', 'Finish': 'Silver Rim', 'Print': 'Fade Proof Print', 'Material': 'Stainless Steel (Enamel Coated)', 'Highlights': 'Dishwasher Safe, OEKO-TEX Certified, No Minimums' },
+  'Magic Mug': { 'Capacity': '11 Oz', 'Finish': 'Glossy Finish', 'Print': 'Fade Proof Print', 'Material': 'Thermal Ceramic', 'Highlights': 'Magic Mug, OEKO-TEX Certified, Box Packing, No Minimums' },
+  'Colour Mug': { 'Capacity': '11 Oz', 'Finish': 'Glossy Finish', 'Print': 'Fade Proof Print', 'Material': 'Ceramic Mug', 'Highlights': '8 Colors, OEKO-TEX Certified, Box Packing, No Minimums' },
+  'Aluminium Sipper Bottle': { 'Capacity': '750 ml', 'Finish': 'Glossy Finish', 'Print': 'Fade Proof Print', 'Material': 'Aluminum Bottle', 'Highlights': 'Clip Cap, OEKO-TEX Certified, Eco-Friendly Nature, No Minimums' },
+  'Steel Bottle': { 'Capacity': '25 Oz', 'Finish': 'Engraved', 'Print': 'Engraved', 'Material': 'Stainless Steel', 'Highlights': 'Leak Proof, BPA Free, Eco Friendly, Custom Gifting, No Minimums' }
+};
+
 export default function Buy({p}) {
   if (!p) return null;
   const [i, setI] = useState(0);
   const [q, setQ] = useState(1);
+  const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
+  const [isHovering, setIsHovering] = useState(false);
+
   const name = p.name || p.title || 'Mug';
   const sizes = p.sizes || [
     {name: '11 OZ (325 ml)', price: p.price || 499},
@@ -49,41 +62,174 @@ export default function Buy({p}) {
   const r = useRouter();
   const currentPrice = selSize.price;
 
+  const images = p.images && p.images.length > 0 ? p.images : [];
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setZoomPos({ x, y });
+  };
+
+  const prevImage = (e) => {
+    e.stopPropagation();
+    if (i > 0) setI(i - 1);
+  };
+
+  const nextImage = (e) => {
+    e.stopPropagation();
+    if (i < images.length - 1) setI(i + 1);
+  };
+
+  const displaySpecs = (p.specs && Object.keys(p.specs).length > 0 && (p.specs.Capacity || p.specs.Finish || p.specs.Highlights || p.specs.Features))
+    ? p.specs
+    : (PRODUCT_SPECS_MAP[p.product_type] || PRODUCT_SPECS_MAP[p.name] || PRODUCT_SPECS_MAP['Steel Bottle'] || PRODUCT_SPECS_MAP['White Ceramic Mug']);
+
+  const specsTableEntries = Object.entries(displaySpecs).filter(([k]) => k !== 'Highlights' && k !== 'Features' && k !== 'Print');
+  const highlightsStr = displaySpecs.Highlights || displaySpecs.Features || 'Full White, OEKO-TEX Certified, Box Packing, No Minimums';
+  const highlightsList = highlightsStr.split(',').map(s => s.trim()).filter(Boolean);
+
   return (
     <div className="pd" style={{padding: '24px 0'}}>
       {/* Product Image Gallery Column */}
       <div>
-        <div style={{aspectRatio: '1', borderRadius: 'var(--r)', overflow: 'hidden', background: 'var(--sage)', border: '1px solid var(--line)'}}>
-          <Img src={p.images?.[i]} alt={name} className="main-img" style={{width: '100%', height: '100%', objectFit: 'cover'}}/>
-        </div>
-        <div className="thumbs" style={{display: 'flex', gap: 10, marginTop: 12, overflowX: 'auto', paddingBottom: 4}}>
-          {(p.images || []).map((s, k) => (
-            <img
-              key={k}
-              src={s}
-              alt={`View ${k + 1}`}
-              onClick={() => setI(k)}
-              style={{
-                width: 68,
-                height: 68,
-                objectFit: 'cover',
-                borderRadius: 10,
-                cursor: 'pointer',
-                border: i === k ? '2px solid var(--blue)' : '1px solid var(--line)',
-                opacity: i === k ? 1 : 0.7,
-                transition: 'all 0.2s ease',
-                flexShrink: 0
-              }}
+        <div
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
+          onMouseMove={handleMouseMove}
+          style={{
+            position: 'relative',
+            aspectRatio: '1',
+            borderRadius: 28,
+            overflow: 'hidden',
+            background: '#f4f4f2',
+            border: '1px solid var(--line)',
+            boxShadow: '0 12px 32px rgba(0,0,0,0.06)',
+            cursor: 'crosshair',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          <div
+            style={{
+              width: '100%',
+              height: '100%',
+              transition: isHovering ? 'transform 0.05s ease-out' : 'transform 0.3s ease-out',
+              transform: isHovering ? 'scale(2.2)' : 'scale(1)',
+              transformOrigin: `${zoomPos.x}% ${zoomPos.y}%`,
+              pointerEvents: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <Img
+              src={images[i]}
+              alt={name}
+              className="main-img"
+              style={{width: '100%', height: '100%', objectFit: 'cover'}}
             />
-          ))}
+          </div>
+
+          {/* Previous Arrow Button */}
+          {images.length > 1 && (
+            <button
+              type="button"
+              onClick={prevImage}
+              disabled={i === 0}
+              style={{
+                position: 'absolute',
+                left: 12,
+                top: '50%',
+                transform: 'translateY(-50%)',
+                width: 38,
+                height: 38,
+                borderRadius: '50%',
+                background: i === 0 ? 'rgba(255,255,255,0.4)' : '#fff',
+                border: '1px solid var(--line)',
+                cursor: i === 0 ? 'not-allowed' : 'pointer',
+                display: 'grid',
+                placeItems: 'center',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
+                opacity: i === 0 ? 0.4 : 1,
+                transition: 'all 0.2s ease',
+                zIndex: 10
+              }}
+              title="Previous Image"
+            >
+              <span style={{fontSize: '1.2rem', fontWeight: 800, color: 'var(--ink)'}}>‹</span>
+            </button>
+          )}
+
+          {/* Next Arrow Button */}
+          {images.length > 1 && (
+            <button
+              type="button"
+              onClick={nextImage}
+              disabled={i >= images.length - 1}
+              style={{
+                position: 'absolute',
+                right: 12,
+                top: '50%',
+                transform: 'translateY(-50%)',
+                width: 38,
+                height: 38,
+                borderRadius: '50%',
+                background: i >= images.length - 1 ? 'rgba(255,255,255,0.4)' : '#fff',
+                border: '1px solid var(--line)',
+                cursor: i >= images.length - 1 ? 'not-allowed' : 'pointer',
+                display: 'grid',
+                placeItems: 'center',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
+                opacity: i >= images.length - 1 ? 0.4 : 1,
+                transition: 'all 0.2s ease',
+                zIndex: 10
+              }}
+              title="Next Image"
+            >
+              <span style={{fontSize: '1.2rem', fontWeight: 800, color: 'var(--ink)'}}>›</span>
+            </button>
+          )}
         </div>
+
+        {/* Thumbnails Row */}
+        {images.length > 1 && (
+          <div className="thumbs" style={{display: 'flex', gap: 10, marginTop: 12, overflowX: 'auto', paddingBottom: 4}}>
+            {images.map((s, k) => (
+              <Img
+                key={k}
+                src={s}
+                alt={`View ${k + 1}`}
+                onClick={() => setI(k)}
+                style={{
+                  width: 68,
+                  height: 68,
+                  objectFit: 'contain',
+                  padding: 4,
+                  background: '#fff',
+                  borderRadius: 10,
+                  cursor: 'pointer',
+                  border: i === k ? '2px solid var(--blue)' : '1px solid var(--line)',
+                  opacity: i === k ? 1 : 0.7,
+                  transition: 'all 0.2s ease',
+                  flexShrink: 0
+                }}
+              />
+            ))}
+          </div>
+        )}
+
+
       </div>
 
       {/* Product Details & Actions Column */}
       <div>
-        <span style={{fontSize: '0.8rem', fontWeight: 700, color: 'var(--blue)', background: 'rgba(36, 60, 143, 0.08)', padding: '4px 12px', borderRadius: 99, letterSpacing: '.04em', textTransform: 'uppercase', display: 'inline-block', marginBottom: 8}}>
-          {p.category || p.niche || 'Original Sipware'}
-        </span>
+        {p.niche && (
+          <span style={{fontSize: '0.8rem', fontWeight: 700, color: 'var(--blue)', background: 'rgba(36, 60, 143, 0.08)', padding: '4px 12px', borderRadius: 99, letterSpacing: '.04em', textTransform: 'uppercase', display: 'inline-block', marginBottom: 8}}>
+            {p.niche}
+          </span>
+        )}
         <h1 style={{fontSize: 'clamp(1.8rem, 5vw, 2.6rem)', fontWeight: 800, margin: '4px 0 12px', lineHeight: 1.2}}>
           {name}
         </h1>
@@ -94,59 +240,33 @@ export default function Buy({p}) {
           {p.description}
         </p>
 
-        {/* Size Capacity Chips */}
-        <div style={{margin: '20px 0'}}>
-          <label style={{display: 'block', fontWeight: 700, fontSize: '0.9rem', marginBottom: 10}}>
-            Select Size &amp; Capacity:
-          </label>
-          <div style={{display: 'flex', gap: 10, flexWrap: 'wrap'}}>
-            {sizes.map(s => (
-              <button
-                key={s.name}
-                type="button"
-                className={`chip ${selSize.name === s.name ? 'on' : ''}`}
-                onClick={() => setSelSize(s)}
-                style={{
-                  padding: '10px 18px',
-                  borderRadius: 99,
-                  fontSize: '0.9rem',
-                  fontWeight: 600,
-                  cursor: 'pointer'
-                }}
-              >
-                {s.name} — {inr(s.price)}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Specifications List */}
-        {p.specs && Object.keys(p.specs).length > 0 && (
+        {/* Specifications Table (Capacity, Finish, Material) */}
+        {specsTableEntries.length > 0 && (
           <ul className="specs" style={{margin: '20px 0', padding: 0, listStyle: 'none', borderTop: '1px solid var(--line)'}}>
-            {Object.entries(p.specs).map(([k, v]) => (
+            {specsTableEntries.map(([k, v]) => (
               <li key={k} style={{display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid var(--line)', fontSize: '0.9rem'}}>
-                <span style={{textTransform: 'capitalize', color: 'var(--mute)'}}>{k}</span>
-                <span style={{fontWeight: 600}}>{v}</span>
+                <span style={{textTransform: 'capitalize', color: 'var(--mute)', fontWeight: 500}}>{k}</span>
+                <span style={{fontWeight: 700, color: 'var(--ink)', textAlign: 'right'}}>{v}</span>
               </li>
             ))}
           </ul>
         )}
 
-        {/* Feature Badges Card */}
-        <div style={{background: '#fff', padding: 14, borderRadius: 14, border: '1px solid var(--line)', display: 'grid', gap: 8, fontSize: '0.85rem', color: 'var(--ink)', marginBottom: 24}}>
-          <div style={{display: 'flex', alignItems: 'center', gap: 8}}>
-            <IconSparkles size={16} color="var(--blue)" />
-            <span><b>HD Sublimation Print:</b> Ultra-vibrant zero-fade artwork</span>
+        {/* Product Highlights Card */}
+        {highlightsList.length > 0 && (
+          <div style={{background: '#fff', padding: 16, borderRadius: 16, border: '1px solid var(--line)', display: 'grid', gap: 10, fontSize: '0.88rem', color: 'var(--ink)', marginBottom: 24}}>
+            <div style={{fontWeight: 700, fontSize: '0.92rem', color: 'var(--blue)', marginBottom: 2, display: 'flex', alignItems: 'center', gap: 6}}>
+              <IconSparkles size={16} color="var(--blue)" />
+              Product Highlights
+            </div>
+            {highlightsList.map((tag, idx) => (
+              <div key={idx} style={{display: 'flex', alignItems: 'center', gap: 8}}>
+                <IconShieldCheck size={16} color="var(--blue)" />
+                <span style={{fontWeight: 600}}>{tag}</span>
+              </div>
+            ))}
           </div>
-          <div style={{display: 'flex', alignItems: 'center', gap: 8}}>
-            <IconShieldCheck size={16} color="var(--blue)" />
-            <span><b>Premium Quality:</b> 100% Dishwasher &amp; Microwave Safe</span>
-          </div>
-          <div style={{display: 'flex', alignItems: 'center', gap: 8}}>
-            <IconTruck size={16} color="var(--blue)" />
-            <span><b>Fast Shipping:</b> Dispatched in 2-3 days via premier courier</span>
-          </div>
-        </div>
+        )}
 
         {/* Quantity & CTA Buttons Row */}
         <div style={{display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center'}}>

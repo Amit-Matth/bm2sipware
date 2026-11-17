@@ -14,9 +14,18 @@ export default function Shop() {
   const [sort, setSort] = useState('pop');
   const [viewMode, setViewMode] = useState('grid'); // 'grid' | 'list'
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+  const [banner, setBanner] = useState({
+    title: 'Mega Vibe Sale — Flat 10% OFF',
+    subtitle: 'Direct 10% OFF applied automatically on all products!'
+  });
   const {add} = useCart();
 
   useEffect(() => {
+    try {
+      const saved = localStorage.getItem('saleBannerSettings');
+      if (saved) setBanner(JSON.parse(saved));
+    } catch {}
+
     fetch('/api/products')
       .then(r => r.json())
       .then(data => {
@@ -31,10 +40,10 @@ export default function Shop() {
   }, []);
 
   const niches = [
-    { label: 'Roots', value: 'JAAT Haryanvi' },
-    { label: 'Wealth', value: 'Stock Market' },
+    { label: 'Roots', value: 'Roots' },
+    { label: 'Wealth', value: 'Wealth' },
     { label: 'Relationships', value: 'Relationships' },
-    { label: 'Technology', value: 'Corporate Engineers' }
+    { label: 'Technology', value: 'Technology' }
   ];
 
   const productTypes = [
@@ -43,7 +52,7 @@ export default function Shop() {
     { label: 'White Enamel Mug', value: 'White Enamel Mug' },
     { label: 'Magic Mug', value: 'Magic Ceramic Coffee Mug' },
     { label: 'Colour Mug', value: 'Colour Ceramic Coffee Mug' },
-    { label: 'Aluminium Sipper', value: 'Aluminium Sipper Bottle' },
+    { label: 'Aluminium Sipper Bottle', value: 'Aluminium Sipper Bottle' },
     { label: 'Steel Bottle', value: 'Stainless Steel Water Bottle' }
   ];
 
@@ -72,7 +81,10 @@ export default function Shop() {
       if (selectedNiches.length > 0 && !selectedNiches.includes(p.niche) && !selectedNiches.includes(p.category)) return false;
       if (selectedTypes.length > 0) {
         const title = (p.name || p.title || '').toLowerCase();
-        const matchesType = selectedTypes.some(t => title.includes(t.toLowerCase()));
+        const category = (p.category || '').toLowerCase();
+        const matchesType = selectedTypes.some(t =>
+          title.includes(t.toLowerCase()) || category.includes(t.toLowerCase())
+        );
         if (!matchesType) return false;
       }
       return true;
@@ -95,46 +107,67 @@ export default function Shop() {
   return (
     <div className="wrap shop-container" style={{padding: '32px 16px 64px 16px', maxWidth: 1400}}>
 
-      {/* Top Promotional Banner */}
-      <div
-        className="shop-promo-banner"
-        style={{
-          background: 'linear-gradient(135deg, var(--blue), #16202B)',
-          color: '#fff',
-          padding: '14px 20px',
-          borderRadius: 16,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: 12,
-          marginBottom: 24,
-          boxShadow: '0 8px 24px rgba(36,60,143,0.15)',
-          flexWrap: 'wrap'
-        }}
-      >
-        <div style={{display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap'}}>
-          <span style={{fontSize: '1.3rem'}}>⚡</span>
-          <div>
-            <b style={{fontSize: '0.92rem', display: 'block', marginBottom: 2}}>Mega Vibe Sale &mdash; Flat 10% OFF</b>
-            <span style={{fontSize: '0.8rem', opacity: 0.9}}>
-              Use coupon <code style={{background: 'rgba(255,255,255,0.2)', padding: '2px 7px', borderRadius: 6, fontWeight: 700}}>VIBE10</code> on checkout!
-            </span>
-          </div>
-        </div>
-        <span style={{background: '#fff', color: 'var(--blue)', padding: '6px 14px', borderRadius: 99, fontSize: '0.78rem', fontWeight: 800, letterSpacing: '.04em', textTransform: 'uppercase', whiteSpace: 'nowrap'}}>
-          Live Sale
-        </span>
-      </div>
-
-      {/* Header Row: Title on Left, View Controls on Right */}
-      <div className="shop-header-row" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 14}}>
+      {/* Header Row: Title on Left, Promo Banner in Middle, View Controls on Right */}
+      <div className="shop-header-row" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 28, flexWrap: 'wrap', gap: 16}}>
         <div>
-          <h1 style={{fontSize: 'clamp(1.8rem, 5vw, 2.5rem)', fontWeight: 800, letterSpacing: '-.02em', marginBottom: 4}}>
+          <h1 style={{fontSize: 'clamp(1.8rem, 4vw, 2.4rem)', fontWeight: 800, letterSpacing: '-.02em', marginBottom: 4}}>
             Find Your Vibe.
           </h1>
-          <p style={{color: 'var(--mute)', fontSize: '0.92rem'}}>
-            Across 100+ original art mug designs
+          <p style={{color: 'var(--mute)', fontSize: '0.9rem', margin: 0}}>
+            Discover original art drinkware made to match your mood
           </p>
+        </div>
+
+        {/* Promo Banner Section: Info Badge + Heavy Discount Products Button */}
+        <div style={{display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', justifyContent: 'center'}}>
+          {/* Sale Info Badge */}
+          <div
+            style={{
+              background: 'linear-gradient(135deg, var(--blue), #16202B)',
+              color: '#fff',
+              padding: '10px 18px',
+              borderRadius: 99,
+              fontSize: '0.85rem',
+              fontWeight: 700,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              boxShadow: '0 4px 16px rgba(36,60,143,0.15)'
+            }}
+          >
+            <span>⚡</span>
+            <span>{banner.title} &bull; <span style={{opacity: 0.9, fontWeight: 500}}>Direct 10% OFF</span></span>
+          </div>
+
+          {/* Heavy Discount Products CTA Button */}
+          <Link
+            href="/deals"
+            style={{
+              background: 'var(--blue)',
+              color: '#fff',
+              padding: '10px 20px',
+              borderRadius: 99,
+              fontSize: '0.85rem',
+              fontWeight: 800,
+              textDecoration: 'none',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 6,
+              boxShadow: '0 4px 16px rgba(36, 60, 143, 0.35)',
+              transition: 'all 0.2s ease',
+              whiteSpace: 'nowrap'
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 6px 20px rgba(36, 60, 143, 0.5)';
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 16px rgba(36, 60, 143, 0.35)';
+            }}
+          >
+            🔥 Heavy Discount Products &rarr;
+          </Link>
         </div>
 
         {/* Right Controls: View Switcher & Mobile Filter Button */}
@@ -346,7 +379,9 @@ export default function Shop() {
                       </div>
                       <div>
                         <Link href={`/product/${p.slug || '#'}`} style={{fontWeight: 700, fontSize: '1rem', display: 'block', marginBottom: 2}}>{title}</Link>
-                        <small style={{color: 'var(--mute)', display: 'block', marginBottom: 6}}>{p.category || p.niche}</small>
+                        {p.niche && (
+                          <small style={{color: 'var(--mute)', display: 'block', marginBottom: 6}}>{p.niche}</small>
+                        )}
                         <p style={{fontSize: '0.85rem', color: 'var(--mute)', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden'}}>{p.description}</p>
                       </div>
                       <div style={{textAlign: 'right', display: 'grid', gap: 6}}>
@@ -360,7 +395,7 @@ export default function Shop() {
             )
           ) : (
             <div style={{padding: '48px 20px', textAlign: 'center', background: '#fff', borderRadius: 'var(--r)', border: '1px solid var(--line)'}}>
-              <h3 style={{fontSize: '1.2rem', marginBottom: 8}}>No mugs match your filter</h3>
+              <h3 style={{fontSize: '1.2rem', marginBottom: 8}}>No products match your filter</h3>
               <p style={{color: 'var(--mute)', marginBottom: 16, fontSize: '0.9rem'}}>Try clearing your active filters to explore more designs.</p>
               <button className="btn" onClick={clearFilters}>Reset filters</button>
             </div>

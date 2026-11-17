@@ -1,9 +1,9 @@
 'use client';
 
-import { Image as IKNextImage, buildSrc } from '@imagekit/next';
+import { Image as IKImage } from '@imagekit/next';
 import { useState } from 'react';
 
-const urlEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT || 'https://ik.imagekit.io/bm2sipware';
+const urlEndpoint = 'https://ik.imagekit.io/bm2sipware';
 
 export default function ImageKitImage({
   src,
@@ -26,30 +26,19 @@ export default function ImageKitImage({
     );
   }
 
-  const isImageKitUrl = src.includes('ik.imagekit.io') || src.startsWith('/') && !src.startsWith('/_next') && !src.startsWith('/favicon');
-
-  if (isImageKitUrl) {
-    const cleanSrc = src.includes('ik.imagekit.io') ? src.replace(/^https?:\/\/ik\.imagekit\.io\/[^/]+/, '') : src;
-    return (
-      <IKNextImage
-        urlEndpoint={urlEndpoint}
-        src={cleanSrc.startsWith('/') ? cleanSrc : `/${cleanSrc}`}
-        alt={alt}
-        width={width}
-        height={height}
-        transformation={transformation}
-        className={className}
-        style={style}
-        onError={() => setError(true)}
-        {...props}
-      />
-    );
+  let cleanSrc = src;
+  if (src.includes('ik.imagekit.io')) {
+    cleanSrc = src.replace(/^https?:\/\/ik\.imagekit\.io\/[^/]+/, '');
   }
 
   return (
-    <img
-      src={src}
+    <IKImage
+      urlEndpoint={urlEndpoint}
+      src={cleanSrc.startsWith('/') ? cleanSrc : `/${cleanSrc}`}
       alt={alt}
+      width={width}
+      height={height}
+      transformation={transformation}
       className={className}
       style={style}
       loading={priority ? 'eager' : 'lazy'}

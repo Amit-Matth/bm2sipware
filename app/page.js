@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import {list} from '@/lib/db';
 import ProductCard,{Img} from '@/components/ProductCard';
+import WhatWeSellSection from '@/components/WhatWeSellSection';
 
 export const dynamic='force-dynamic';
 
@@ -105,9 +106,15 @@ export default async function Home(){
    </div>
   </div>
  </section>
- <section><div className="wrap"><div className="row"><h2>What we sell</h2></div><div className="grid" style={{gridTemplateColumns:'repeat(auto-fill,minmax(240px,1fr))'}}>{[{name:'Ceramic Mug',image:all[0]?.images?.[0]||'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=600'},{name:'Sipper Bottle',image:all[1]?.images?.[0]||'https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=600'},{name:'Enamel Mug',image:all[2]?.images?.[0]||'https://images.unsplash.com/photo-1577803645773-f96470509666?w=600'},{name:'Steel Bottle',image:all[3]?.images?.[0]||'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600'}].map((p,i)=><div key={i} className="showcase-card"><div style={{aspectRatio:'1',overflow:'hidden',background:'var(--sage)'}}><img src={p.image} alt={p.name} style={{width:'100%',height:'100%',objectFit:'cover'}}/></div><div style={{padding:'16px',textAlign:'center'}}><h3 style={{fontSize:'1.05rem',fontWeight:600}}>{p.name}</h3></div></div>)}</div></div></section>
- <section className="soft"><div className="wrap"><h2 style={{marginBottom:24}}>What customers say</h2><div className="quotes">
-  {['The print is sharp and the colours match the photos.','Arrived in three days. My new favourite desk mug.','Bought four as gifts. Everyone asked where they were from.'].map(q=><blockquote key={q}>“{q}”</blockquote>)}</div></div></section>
+ <WhatWeSellSection />
+ <section className="soft">
+  <div className="wrap">
+   <h2 style={{marginBottom:24}}>What customers say</h2>
+   <div className="quotes">
+    {['The print is sharp and the colours match the photos.','Arrived in three days. My new favourite desk mug.','Bought four as gifts. Everyone asked where they were from.'].map(q=><blockquote key={q}>“{q}”</blockquote>)}
+   </div>
+  </div>
+ </section>
  <section style={{padding:'48px 0'}}>
   <div className="wrap">
    <div style={{background:'linear-gradient(135deg, #16202B, #243C8F)',color:'#fff',borderRadius:'24px',padding:'48px 24px',textAlign:'center',position:'relative',overflow:'hidden',boxShadow:'0 20px 50px rgba(0,0,0,0.1)'}}>
