@@ -5,7 +5,7 @@ import Link from 'next/link';
 export const dynamic = 'force-dynamic';
 
 export default async function DealsPage() {
-  const all = await list('products', {active: true});
+  const all = await list('products', {active: {$ne: false}});
   const displayProducts = all.filter(p => p.on_sale === true);
 
   return (

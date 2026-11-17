@@ -24,7 +24,7 @@ export async function POST(req) {
       return bad('Invalid order.');
     }
 
-    const ps = await list('products', {id: {$in: items.map(i => String(i.id))}, active: true}, {});
+    const ps = await list('products', {id: {$in: items.map(i => String(i.id))}, active: {$ne: false}}, {});
     const lines = items.map(i => {
       const p = ps.find(x => x.id === i.id);
       const q = Math.min(20, Math.max(1, parseInt(i.qty) || 1));

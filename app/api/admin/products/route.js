@@ -81,16 +81,24 @@ export async function POST(req){
       specs: highlightsText !== null && highlightsText !== undefined ? { ...defaultSpecs, 'Highlights': highlightsText } : defaultSpecs
     };
 
+    const allImages = [];
+    if (coverUrl) allImages.push(coverUrl);
+    if (designUrl && !allImages.includes(designUrl)) allImages.push(designUrl);
+    if (dimensionsUrl && !allImages.includes(dimensionsUrl)) allImages.push(dimensionsUrl);
+
     const imagesText = f.get('images_text');
     if (imagesText) {
-      row.images = imagesText.split(',').map(s => s.trim()).filter(Boolean);
+      const extra = imagesText.split(',').map(s => s.trim()).filter(Boolean);
+      for (const e of extra) {
+        if (!allImages.includes(e)) allImages.push(e);
+      }
     } else if (imgs.length > 0) {
-      row.images = imgs;
-    } else if (coverUrl) {
-      row.images = [coverUrl];
-    } else {
-      row.images = [];
+      for (const img of imgs) {
+        if (!allImages.includes(img)) allImages.push(img);
+      }
     }
+
+    row.images = allImages.length > 0 ? allImages : (coverUrl ? [coverUrl] : []);
 
     const c=await col('products');
     if(id) {

@@ -5,59 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="07aacf08-e8ec-4d0c-8ab2-1455b5c5e14a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/account/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/account/page.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/admin/Panel.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/Panel.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/api/admin/products/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/admin/products/route.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/orders/create/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/orders/create/route.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/cart/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/cart/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/checkout/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/checkout/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/contact/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/contact/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/custom-print/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/custom-print/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/order/[id]/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/[id]/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/policy/[slug]/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/policy/[slug]/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/product/[slug]/Buy.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/product/[slug]/Buy.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/product/[slug]/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/product/[slug]/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/shop/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/shop/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/CartProvider.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/CartProvider.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/Footer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ImageKitImage.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/ImageKitImage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ProductCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/ProductCard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/coupon.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/coupon.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/db.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/db.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/format.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/format.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/mail.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/mail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/designs/coding_1/coding_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/designs/coding_1/images/1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/designs/coding_1/images/2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/designs/coding_1/images/3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/designs/coding_1/images/4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/designs/coding_1/images/5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/designs/coding_1/images/Black Ceramic Coffee Mug.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/designs/coding_1/images/Gemini123456.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/designs/coding_2_w/coding_2_w.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/designs/coding_2_w/images/1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/designs/coding_2_w/images/2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/designs/coding_2_w/images/3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/designs/coding_2_w/images/4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/designs/coding_2_w/images/Aluminium Sipper Bottle.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/products/Aluminium Sipper Bottle.avif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/products/Aluminium Sipper Bottle.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/products/Black Ceramic Coffee Mug.avif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/products/Black Ceramic Coffee Mug.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/products/Colour Ceramic Coffee Mug.avif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/products/Colour Ceramic Coffee Mug.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/products/Magic Ceramic Coffee Mug.avif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/products/Magic Ceramic Coffee Mug.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/products/Stainless Steel Water Bottle.avif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/products/Stainless Steel Water Bottle.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/products/White Ceramic Coffee Mug.avif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/products/White Ceramic Coffee Mug.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/products/White Enamel Mug.avif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/products/White Enamel Mug.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +69,7 @@
       <list>
         <HostState>
           <option name="agentId" value="android-studio-agent-v2" />
-          <option name="conversationId" value="b053d506-78a2-4ea2-89b6-6e7740ae1dda" />
+          <option name="conversationId" value="e01e5856-c7da-486a-8727-6a585fa1731f" />
           <option name="hostId" value="TOOL_WINDOW" />
         </HostState>
       </list>

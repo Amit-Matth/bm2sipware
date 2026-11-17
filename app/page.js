@@ -61,7 +61,7 @@ function IconHeadphones({size=16, color="currentColor"}) {
 }
 
 export default async function Home(){
- const all=await list('products',{active:true});
+ const all=await list('products',{active: {$ne: false}});
  const featured=all.filter(p=>p.featured).slice(0,4),fresh=all.slice(0,4);
  const cats=[...new Set(all.map(p=>p.category).filter(Boolean))];
  const Sec=({t,l})=>l.length?<section><div className="wrap"><div className="row"><h2>{t}</h2><Link className="link" href="/shop">View all</Link></div><div className="grid">{l.map(p=><ProductCard key={p.id} p={p}/>)}</div></div></section>:null;

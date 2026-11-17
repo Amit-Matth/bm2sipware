@@ -107,6 +107,7 @@ export default function Panel() {
   const [nicheDropdownOpen, setNicheDropdownOpen] = useState(false);
   const [productTypeDropdownOpen, setProductTypeDropdownOpen] = useState(false);
   const [formHighlights, setFormHighlights] = useState([]);
+  const [saving, setSaving] = useState(false);
 
   const load = async () => {
     setLoading(true);
@@ -195,11 +196,18 @@ export default function Panel() {
 
   async function save(e) {
     e.preventDefault();
-    const r = await api('/api/admin/products', 'POST', new FormData(e.target));
-    if (r.error) alert(r.error);
-    else {
-      setE(null);
-      load();
+    if (saving) return;
+    setSaving(true);
+    try {
+      const r = await api('/api/admin/products', 'POST', new FormData(e.target));
+      if (r.error) {
+        alert(r.error);
+      } else {
+        setE(null);
+        load();
+      }
+    } finally {
+      setSaving(false);
     }
   }
 
@@ -793,8 +801,10 @@ export default function Panel() {
               </label>
 
               <div style={{display: 'flex', gap: 10, marginTop: 16}}>
-                <button className="btn" style={{padding: '10px 24px'}}>Save Product</button>
-                <button type="button" className="btn ghost" onClick={() => setE(null)} style={{padding: '10px 24px'}}>
+                <button className="btn" disabled={saving} style={{padding: '10px 24px', opacity: saving ? 0.6 : 1}}>
+                  {saving ? 'Saving Product...' : 'Save Product'}
+                </button>
+                <button type="button" className="btn ghost" disabled={saving} onClick={() => setE(null)} style={{padding: '10px 24px'}}>
                   Cancel
                 </button>
               </div>
@@ -826,7 +836,7 @@ export default function Panel() {
                         onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
                       />
                     </td>
-                    <td><b>{p.name}</b></td>
+                    <td><b>{p.name || p.title || 'Untitled Product'}</b></td>
                     <td><span className="chip" style={{padding: '4px 10px', fontSize: '0.8rem', background: 'rgba(36,60,143,0.08)', color: 'var(--blue)', border: 0}}>{p.niche || 'Original Sipware'}</span></td>
                     <td>{inr(p.price)}</td>
                     <td>

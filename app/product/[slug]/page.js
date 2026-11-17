@@ -7,10 +7,10 @@ import ProductCard from '@/components/ProductCard';
 export const dynamic = 'force-dynamic';
 
 export default async function Product({params}) {
-  const p = await one('products', {slug: params.slug, active: true});
+  const p = await one('products', {slug: params.slug, active: {$ne: false}});
   if (!p) notFound();
 
-  const allProducts = await list('products', {active: true});
+  const allProducts = await list('products', {active: {$ne: false}});
 
   // Section: "Same Design on Other Products" - Products with matching design or different product types
   const sameDesignProducts = allProducts.filter(item => {
