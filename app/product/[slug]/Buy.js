@@ -34,6 +34,17 @@ function IconSparkles({size=16, color="var(--blue)"}) {
   );
 }
 
+function IconZoom({size=16, color="currentColor"}) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      <line x1="11" y1="8" x2="11" y2="14"></line>
+      <line x1="8" y1="11" x2="14" y2="11"></line>
+    </svg>
+  );
+}
+
 const PRODUCT_SPECS_MAP = {
   'White Ceramic Mug': { 'Capacity': '11 Oz', 'Finish': 'Glossy Finish', 'Print': 'Fade Proof Print', 'Material': 'Ceramic Mug', 'Highlights': 'Full White, OEKO-TEX Certified, Box Packing, No Minimums' },
   'Black Ceramic Mug': { 'Capacity': '11 Oz', 'Finish': 'Glossy Finish', 'Print': 'Fade Proof Print', 'Material': 'Ceramic Mug', 'Highlights': 'Full Black Color, OEKO-TEX Certified, Box Packing, No Minimums' },
@@ -48,8 +59,10 @@ export default function Buy({p}) {
   if (!p) return null;
   const [i, setI] = useState(0);
   const [q, setQ] = useState(1);
-  const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
-  const [isHovering, setIsHovering] = useState(false);
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [pan, setPan] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [startPos, setStartPos] = useState({ x: 0, y: 0 });
 
   const name = p.name || p.title || 'Mug';
   const sizes = p.sizes || [
@@ -63,22 +76,43 @@ export default function Buy({p}) {
   const currentPrice = selSize.price;
 
   const images = p.images && p.images.length > 0 ? p.images : [];
+  const currentImg = images[i] || '';
+  const isDesignPng = currentImg.toLowerCase().endsWith('.png') || currentImg.toLowerCase().includes('design');
+
+  const handleMouseDown = (e) => {
+    if (!isZoomed) return;
+    setIsDragging(true);
+    setStartPos({ x: e.clientX - pan.x, y: e.clientY - pan.y });
+  };
 
   const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setZoomPos({ x, y });
+    if (!isDragging || !isZoomed) return;
+    setPan({
+      x: e.clientX - startPos.x,
+      y: e.clientY - startPos.y
+    });
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
   };
 
   const prevImage = (e) => {
     e.stopPropagation();
-    if (i > 0) setI(i - 1);
+    if (i > 0) {
+      setI(i - 1);
+      setIsZoomed(false);
+      setPan({ x: 0, y: 0 });
+    }
   };
 
   const nextImage = (e) => {
     e.stopPropagation();
-    if (i < images.length - 1) setI(i + 1);
+    if (i < images.length - 1) {
+      setI(i + 1);
+      setIsZoomed(false);
+      setPan({ x: 0, y: 0 });
+    }
   };
 
   const displaySpecs = (p.specs && Object.keys(p.specs).length > 0 && (p.specs.Capacity || p.specs.Finish || p.specs.Highlights || p.specs.Features))
@@ -94,43 +128,99 @@ export default function Buy({p}) {
       {/* Product Image Gallery Column */}
       <div>
         <div
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
-          onMouseMove={handleMouseMove}
           style={{
             position: 'relative',
             aspectRatio: '1',
             borderRadius: 28,
             overflow: 'hidden',
-            background: '#f4f4f2',
+            background: '#fff',
             border: '1px solid var(--line)',
             boxShadow: '0 12px 32px rgba(0,0,0,0.06)',
-            cursor: 'crosshair',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            padding: 24
           }}
         >
           <div
+            onClick={() => {
+              if (!isDragging) {
+                const nextZoom = !isZoomed;
+                setIsZoomed(nextZoom);
+                if (!nextZoom) setPan({ x: 0, y: 0 });
+              }
+            }}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
             style={{
               width: '100%',
               height: '100%',
-              transition: isHovering ? 'transform 0.05s ease-out' : 'transform 0.3s ease-out',
-              transform: isHovering ? 'scale(2.2)' : 'scale(1)',
-              transformOrigin: `${zoomPos.x}% ${zoomPos.y}%`,
-              pointerEvents: 'none',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center'
+              justifyContent: 'center',
+              cursor: isZoomed ? (isDragging ? 'grabbing' : 'grab') : 'zoom-in',
+              overflow: 'hidden',
+              userSelect: 'none',
+              background: '#fff',
+              borderRadius: 16
             }}
           >
             <Img
               src={images[i]}
               alt={name}
               className="main-img"
-              style={{width: '100%', height: '100%', objectFit: 'cover'}}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'contain',
+                background: '#fff',
+                transform: isZoomed ? `scale(1.8) translate(${pan.x}px, ${pan.y}px)` : 'scale(1)',
+                transition: isDragging ? 'none' : 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+                pointerEvents: 'none'
+              }}
             />
           </div>
+
+          {/* Zoom Toggle Button with Lucide Icon */}
+          <button
+            type="button"
+            onClick={() => {
+              const nextZoom = !isZoomed;
+              setIsZoomed(nextZoom);
+              if (!nextZoom) setPan({ x: 0, y: 0 });
+            }}
+            style={{
+              position: 'absolute',
+              bottom: 16,
+              right: 16,
+              background: 'rgba(255, 255, 255, 0.95)',
+              border: '1px solid var(--line)',
+              borderRadius: 12,
+              padding: '8px 12px',
+              fontSize: '0.85rem',
+              fontWeight: 700,
+              color: 'var(--ink)',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+              boxShadow: '0 4px 16px rgba(0,0,0,0.12)',
+              zIndex: 10,
+              transition: 'all 0.2s ease'
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.background = 'var(--blue)';
+              e.currentTarget.style.color = '#fff';
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.95)';
+              e.currentTarget.style.color = 'var(--ink)';
+            }}
+          >
+            <IconZoom size={16} color="currentColor" /> {isZoomed ? 'Reset Zoom' : 'Zoom In'}
+          </button>
 
           {/* Previous Arrow Button */}
           {images.length > 1 && (
@@ -201,12 +291,16 @@ export default function Buy({p}) {
                 key={k}
                 src={s}
                 alt={`View ${k + 1}`}
-                onClick={() => setI(k)}
+                onClick={() => {
+                  setI(k);
+                  setIsZoomed(false);
+                  setPan({ x: 0, y: 0 });
+                }}
                 style={{
                   width: 68,
                   height: 68,
-                  objectFit: 'contain',
-                  padding: 4,
+                  objectFit: 'cover',
+                  padding: 2,
                   background: '#fff',
                   borderRadius: 10,
                   cursor: 'pointer',
@@ -219,8 +313,6 @@ export default function Buy({p}) {
             ))}
           </div>
         )}
-
-
       </div>
 
       {/* Product Details & Actions Column */}
@@ -240,7 +332,7 @@ export default function Buy({p}) {
           {p.description}
         </p>
 
-        {/* Specifications Table (Capacity, Finish, Material) */}
+        {/* Specifications Table */}
         {specsTableEntries.length > 0 && (
           <ul className="specs" style={{margin: '20px 0', padding: 0, listStyle: 'none', borderTop: '1px solid var(--line)'}}>
             {specsTableEntries.map(([k, v]) => (
